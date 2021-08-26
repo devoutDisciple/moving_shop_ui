@@ -33,6 +33,7 @@ export default class Advertisement extends React.Component {
 	async getMockFlag() {
 		let res = await Request.get('/mock/getMockFlag', { version: config.currentVersion });
 		let data = res.data;
+		console.log(config.currentVersion, data);
 		if (Number(data) === 1) {
 			return;
 		} // 直接跳转home页面
@@ -58,7 +59,7 @@ export default class Advertisement extends React.Component {
 	}
 
 	getImageSize() {
-		Image.getSize(`${Config.baseUrl}/advertisement.jpg`, (imgWidth, imgHeight) => {
+		Image.getSize(`${Config.baseUrl}/adver/advertisement.png`, (imgWidth, imgHeight) => {
 			let pre = imgWidth / screenWidth;
 			// eslint-disable-next-line radix
 			let height = parseInt(imgHeight / pre);
@@ -87,7 +88,7 @@ export default class Advertisement extends React.Component {
 					<Image
 						style={{ width: screenWidth, height: height }}
 						source={{
-							uri: `${Config.baseUrl}/advertisement.png`,
+							uri: `${Config.baseUrl}/adver/advertisement.png`,
 						}}
 					/>
 					<TouchableOpacity style={styles.skip} onPress={this.goHome.bind(this)}>

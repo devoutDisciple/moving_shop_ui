@@ -5,6 +5,7 @@ import Detailgoods from './DetailGoods';
 import DetailPrint from './DetailPrint';
 import Request from '@/util/Request';
 import Loading from '@/component/Loading';
+import SafeViewComponent from '@/component/SafeViewComponent';
 import { Badge } from 'react-native-elements';
 import CommonHeader from '@/component/CommonHeader';
 import DetailShopOrder from './DetailShopOrder';
@@ -38,32 +39,34 @@ export default class OrderScreen extends React.Component {
 		const { navigation } = this.props,
 			{ orderDetail, loadingVisible, type } = this.state;
 		return (
-			<View style={{ flex: 1 }}>
-				<CommonHeader title="订单详情" navigation={navigation} />
-				<ScrollView style={styles.detail_content} showsVerticalScrollIndicator={false}>
-					<View style={styles.detail_content_title}>
-						<Text style={styles.detail_content_title_num}>订单编号: {orderDetail.code}</Text>
-						<View style={styles.detail_content_title_time}>
-							<Text style={styles.detail_content_title_time_left}>{orderDetail.create_time}</Text>
-							{orderDetail.urgency === 2 && (
-								<Badge value="加急订单" status="success" textStyle={{ fontSize: 10 }} />
-							)}
+			<SafeViewComponent>
+				<View style={{ flex: 1 }}>
+					<CommonHeader title="订单详情" navigation={navigation} />
+					<ScrollView style={styles.detail_content} showsVerticalScrollIndicator={false}>
+						<View style={styles.detail_content_title}>
+							<Text style={styles.detail_content_title_num}>订单编号: {orderDetail.code}</Text>
+							<View style={styles.detail_content_title_time}>
+								<Text style={styles.detail_content_title_time_left}>{orderDetail.create_time}</Text>
+								{orderDetail.urgency === 2 && (
+									<Badge value="加急订单" status="success" textStyle={{ fontSize: 10 }} />
+								)}
+							</View>
 						</View>
-					</View>
-					<Detailgoods orderDetail={orderDetail} type={type} />
-					{Number(type) === 5 ? <DetailShopOrder orderDetail={orderDetail} /> : null}
-					{Number(orderDetail.order_type) === 4 ? (
-						<DetailOrderByShoperInput orderDetail={orderDetail} type={type} />
-					) : (
-						<>
-							<DetailUser orderDetail={orderDetail} type={type} />
-							<DetailSave orderDetail={orderDetail} type={type} />
-						</>
-					)}
-					<DetailPrint orderid={orderDetail.id} navigation={navigation} />
-				</ScrollView>
-				<Loading visible={loadingVisible} />
-			</View>
+						<Detailgoods orderDetail={orderDetail} type={type} />
+						{Number(type) === 5 ? <DetailShopOrder orderDetail={orderDetail} /> : null}
+						{Number(orderDetail.order_type) === 4 ? (
+							<DetailOrderByShoperInput orderDetail={orderDetail} type={type} />
+						) : (
+							<>
+								<DetailUser orderDetail={orderDetail} type={type} />
+								<DetailSave orderDetail={orderDetail} type={type} />
+							</>
+						)}
+						<DetailPrint orderid={orderDetail.id} navigation={navigation} />
+					</ScrollView>
+					<Loading visible={loadingVisible} />
+				</View>
+			</SafeViewComponent>
 		);
 	}
 }
