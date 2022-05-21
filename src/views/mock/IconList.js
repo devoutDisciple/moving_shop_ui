@@ -2,6 +2,7 @@ import React from 'react';
 import Message from '@/component/Message';
 import IconWithText from '@/component/IconWithText';
 import { View, StyleSheet, Linking } from 'react-native';
+import config from '@/config/config';
 
 export default class IconList extends React.Component {
 	constructor(props) {
@@ -39,7 +40,7 @@ export default class IconList extends React.Component {
 
 		// 官网
 		if (data && data.key === 'guanwang') {
-			let url = 'http://47.107.43.166/';
+			let url = config.GUANWANG_ADDRESS_URL;
 			Linking.canOpenURL(url)
 				.then(supported => {
 					if (supported) {
